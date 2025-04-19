@@ -25,6 +25,7 @@ a:hover {
 }
 
 body {
+  position: relative;
   margin: 0;
   display: flex;
   place-items: center;
@@ -70,18 +71,27 @@ button:focus-visible {
 }
 
 .article-content {
-  position: relative;
   width: 100%;
 }
 
 .article-content p {
-  margin-top: 96px;
   width: 80%;
   padding: 16px;
   text-align: left;
 }
 
 .player {
-  position: absolute;
+  margin-top: 16px;
+  width: 500px;
   height: 80px;
+}
+
+.mini-player {
+  width: 300px;
+  height: 60px;
+}
+
+.mini-player .play-button {
+  width: 30px;
+  height: 30px;
 }
