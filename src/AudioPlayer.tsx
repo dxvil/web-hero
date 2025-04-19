@@ -1,18 +1,16 @@
 import React, { useRef, useState, useEffect } from 'react';
-import { useScrollPosition } from './hooks/useScrollPosition';
-import { useIsInView } from './hooks/useIsInView';
 
 type Props = {
   src: string;
+  containerRef:React.RefObject<HTMLDivElement | null>;
+  isSticky?: boolean;
 };
 
-const AudioPlayer: React.FC<Props> = ({ src }) => {
+const AudioPlayer: React.FC<Props> = ({ src, containerRef, isSticky }) => {
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const [isPlaying, setIsPlaying] = useState(false);
   const [duration, setDuration] = useState(0);
   const [currentTime, setCurrentTime] = useState(0);
-  const scrollPosition = useScrollPosition();
-  const isInView = useIsInView<HTMLAudioElement>(audioRef);
 
   useEffect(() => {
     const audio = audioRef.current;
@@ -60,10 +58,16 @@ const AudioPlayer: React.FC<Props> = ({ src }) => {
     new Date(time * 1000).toISOString().substring(14, 19);
 
   return (
-    <div className="player w-full max-w-xl p-4 rounded-2xl shadow-xl bg-black flex items-center gap-4">
+    <div
+      className={
+        `player w-full max-w-xl p-4 rounded-2xl shadow-xl bg-black flex items-center gap-4 transition-all duration-300` +
+        (isSticky ? ' fixed bottom-4 right-4 z-50 mini-player' : '')
+      }
+      ref={containerRef}
+    >
       <button
         onClick={togglePlay}
-        className="p-2 bg-blue-600 text-white rounded-full hover:bg-blue-700 transition"
+        className="play-btn p-2 bg-blue-600 text-white rounded-full hover:bg-blue-700 transition"
       >
         {isPlaying ? '⏸️' : '▶️'}
       </button>
